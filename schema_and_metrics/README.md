@@ -20,4 +20,4 @@
 Если предсказываем интервал, то micro f1, так как у нас imbalanced data.
 
 
-/Users/egortishchenko/PycharmProjects/schema_and_metrics
+
