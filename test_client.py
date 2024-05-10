@@ -1,12 +1,12 @@
 import requests
 from config import MODEL_URL
 
-image_path = "/path"
+image_path = "http://images.cocodataset.org/val2017/000000039769.jpg"
 
-response = requests.get(MODEL_URL, params={"image_path": image_path})
+response = requests.post("http://127.0.0.1:8006/embed ", json={"url": image_path})
 
 if response.status_code == 200:
     result = response.json()
-    print(f"Predicted label: {result['predicted_label']}")
+    print(result)
 else:
     print(f"Error: {response.status_code} - {response.text}")
