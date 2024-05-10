@@ -9,6 +9,12 @@ class State(rx.State):
     async def handle_upload(self, files: list[rx.UploadFile]):
         for file in files:
             upload_data = await file.read()
-            response = requests.post(MODEL_URL, files={"file": upload_data})
+            response = requests.post("http://127.0.0.1:8006/embed", files={"file": upload_data})
             json_data = json.loads(response.text)
-            self.price = json_data["predicted_label"]
+            embedding = json_data["embeddings"]
+            response = requests.post("http://127.0.0.1:8007/search", json = {"embeddings":embedding})
+            self.price = response.text
+
+
+
+
