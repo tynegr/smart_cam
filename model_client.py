@@ -1,11 +1,16 @@
 from fastapi import FastAPI, UploadFile
-from PIL import Image
-import torch
-from transformers import CLIPProcessor, CLIPModel
 import uvicorn
 import io
+import imageio.v3 as iio
+from vector_database.database import Database
+import cv2
+from transformers import CLIPProcessor, CLIPModel
 from config import MODEL_PATH, MODEL_HOST, MODEL_PORT, MODEL_NAME
-from vector_database.database import Database, Item
+import torch
+from PIL import Image
+import numpy as np
+
+
 
 app = FastAPI()
 
@@ -37,6 +42,34 @@ async def embed(file: UploadFile):
     outputs = model(**inputs)
     image_embeds = outputs.image_embeds
     return {"embeddings": image_embeds.tolist()}
+
+
+@app.post("/embed_video")
+async def embed_video(file: UploadFile):
+    # Read the uploaded file
+    contents = await file.read()
+    video_stream = iio.imiter(contents, plugin="pyav")
+
+    frames = []
+    for frame in video_stream:
+        frame = np.array(frame)
+        frames.append(frame)
+
+    resized_frames = [cv2.resize(frame, (512, 512)) for frame in frames]
+
+    video_embeddings = []
+    for frame in resized_frames:
+        image = Image.fromarray(frame)
+        labels = ["футболка Gucci", "пляж"]
+        inputs = processor(text=labels, images=image, return_tensors="pt",
+                           padding=True)
+        outputs = model(**inputs)
+        image_embeds = outputs.image_embeds
+        video_embeddings.append(image_embeds)
+
+    video_embedding = torch.mean(torch.stack(video_embeddings), dim=0)
+
+    return {"embeddings": video_embedding.tolist()}
 
 
 uvicorn.run(app, host=MODEL_HOST, port=MODEL_PORT)
