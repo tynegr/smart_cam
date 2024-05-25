@@ -41,7 +41,11 @@ async def embed(file: UploadFile):
     inputs = processor(text=labels, images=image, return_tensors="pt", padding=True)
     outputs = model(**inputs)
     image_embeds = outputs.image_embeds
-    return {"embeddings": image_embeds.tolist()}
+    logits_per_image = outputs.logits_per_image
+    probs = logits_per_image.softmax(dim=1)
+    _, predicted = torch.max(probs, 1)
+    predicted_label = labels[predicted.item()]
+    return {"embeddings": image_embeds.tolist(),"label": predicted_label}
 
 
 @app.post("/embed_video")

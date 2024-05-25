@@ -25,12 +25,13 @@ async def add(data: dict):
 @app.post("/search")
 async def search(data: dict) -> str:
     embedding = data["embeddings"]
+    category = data["category"]
     print(embedding)
     item = Item(
         embedding=embedding[0],
         payload={
 
-            "document_id": "sheryaev",
+            "category": category,
         },
     )
     return database.search(item)
