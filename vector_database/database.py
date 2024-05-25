@@ -55,12 +55,16 @@ class Database:
 
             ],
         )
-        return self.client.search(
+
+        response = self.client.search(
             collection_name=self.collection_name,
             query_vector=embedding,
             query_filter=filters,
             # limit=N_CHUNKS,
         )
+        print(response[0].payload["document_id"])
+        return response[0].payload["document_id"]
+
 
     def delete_points(self, data: dict):
         document_id = data["document_id"]

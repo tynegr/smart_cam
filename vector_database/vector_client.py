@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from vector_database.database import Database, Item
+from database import Database, Item
 import uvicorn
 from config import QDRANT_HOST, QDRANT_PORT
 
@@ -23,7 +23,7 @@ async def add(data: dict):
 
 
 @app.post("/search")
-async def search(data: dict) -> list:
+async def search(data: dict) -> str:
     embedding = data["embeddings"]
     print(embedding)
     item = Item(
