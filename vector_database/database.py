@@ -47,9 +47,9 @@ class Database:
         filters = models.Filter(
             must=[
                 models.FieldCondition(
-                    key="document_id",
+                    key="category",
                     match=models.MatchValue(
-                        value=payload["document_id"],
+                        value=payload["category"],
                     ),
                 ),
 
@@ -62,8 +62,8 @@ class Database:
             query_filter=filters,
             # limit=N_CHUNKS,
         )
-        print(response[0].payload["document_id"])
-        return response[0].payload["document_id"]
+        print(response[0].payload["price"])
+        return response[0].payload["price"]
 
 
     def delete_points(self, data: dict):
