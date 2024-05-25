@@ -2,7 +2,6 @@ from fastapi import FastAPI, UploadFile
 import uvicorn
 import io
 import imageio.v3 as iio
-from vector_database.database import Database
 import cv2
 from transformers import CLIPProcessor, CLIPModel
 from config import MODEL_PATH, MODEL_HOST, MODEL_PORT, MODEL_NAME
@@ -11,12 +10,10 @@ from PIL import Image
 import numpy as np
 
 
-
 app = FastAPI()
 
 model = CLIPModel.from_pretrained(MODEL_PATH)
 processor = CLIPProcessor.from_pretrained(MODEL_NAME)
-database = Database()
 
 @app.post("/predict")
 async def predict(file: UploadFile):

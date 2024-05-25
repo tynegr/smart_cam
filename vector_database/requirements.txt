@@ -1,0 +1,7 @@
+uuid
+qdrant-client
+pydantic
+fastapi
+uvicorn
+
+

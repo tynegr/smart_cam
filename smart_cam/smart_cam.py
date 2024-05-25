@@ -1,6 +1,6 @@
 import reflex as rx
-from components.uploader import upload_form
-from state import State
+from smart_cam.components.uploader import upload_form
+from smart_cam.state import State
 
 
 def index() -> rx.Component:

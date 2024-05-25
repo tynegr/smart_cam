@@ -1,5 +1,5 @@
 import reflex as rx
-from state import State
+from smart_cam.state import State
 
 def upload_form():
     return rx.vstack(

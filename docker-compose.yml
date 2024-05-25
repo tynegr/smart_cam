@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  model_client:
+    build:
+      context: .
+      dockerfile: Dockerfile_model
+    container_name: model_client_container
+    network_mode: host
+    depends_on:
+      - vector_client
+    command: python model_client.py
+
+  vector_client:
+    build:
+      context: .
+      dockerfile: vector_database/Dockerfile_vector
+    container_name: vector_client_container
+    network_mode: host
+
+  smart_cam:
+    build:
+      context: .
+      dockerfile: smart_cam/Dockerfile_main
+    container_name: main_client_container
+    ports:
+      - "3000:3000"
+      - "8000:8000"
+

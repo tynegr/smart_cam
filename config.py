@@ -1,5 +1,7 @@
-MODEL_PATH = "/Users/egortishchenko/clip-vit-base-patch16"
-MODEL_URL = "http://127.0.0.1:8006/predict"
+MODEL_PATH = "/app/vector_database/clip-vit-base-patch16"
+# MODEL_PATH = "/Users/egortishchenko/PycharmProjects/smart_cam/vector_database/clip-vit-base-patch16"
+MODEL_URL = "http://model_client_container44:8006"
+VECTOR_URL = "http://vector_client_container44:8007"
 MODEL_HOST = "127.0.0.1"
 MODEL_PORT = 8006
 MODEL_NAME = "openai/clip-vit-base-patch16"

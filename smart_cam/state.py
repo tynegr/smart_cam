@@ -11,13 +11,13 @@ class State(rx.State):
             self.price = ""
             yield
             try:
-                response = requests.post("http://127.0.0.1:8006/embed", files={"file": upload_data})
+                response = requests.post("http://model_client:8006/embed", files={"file": upload_data})
             except Exception as e:
                 response = ""
 
             if not response:
                 try:
-                    response = requests.post("http://127.0.0.1:8006/embed_video", files={"file": upload_data})
+                    response = requests.post("http://model_client:8006/embed_video", files={"file": upload_data})
                 except Exception as e:
                     pass
 
@@ -26,7 +26,7 @@ class State(rx.State):
                 json_data = json.loads(response.text)
                 embedding = json_data["embeddings"]
                 category = json_data["category"]
-                response = requests.post("http://127.0.0.1:8007/search", json = {"embeddings":embedding,"category":category})
+                response = requests.post("http://vector_client:8007/search", json = {"embeddings":embedding,"category":category})
                 self.price = response.text
             else:
                 self.price = "Unsupported File format"
