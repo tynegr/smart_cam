@@ -10,11 +10,14 @@ class State(rx.State):
         for file in files:
             upload_data = await file.read()
             response = requests.post("http://127.0.0.1:8006/embed", files={"file": upload_data})
+            print(response.text)
             json_data = json.loads(response.text)
             embedding = json_data["embeddings"]
-            response = requests.post("http://127.0.0.1:8007/search", json = {"embeddings":embedding})
+            category = json_data["label"]
+            response = requests.post("http://127.0.0.1:8007/search",
+                                     json={"embeddings": embedding,
+                                           "label": category})
             self.price = response.text
-
 
 
 
