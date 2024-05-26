@@ -39,8 +39,7 @@ async def predict(file: UploadFile):
 async def embed(file: UploadFile):
     image = Image.open(io.BytesIO(await file.read()))
     # labels = unique_labels
-    labels = ["футболка Gucci", "футболка Prada", "футболка Гуччи",
-              "футболка Фенди"]
+    labels = ["Анораки"]
     inputs = processor(text=labels, images=image, return_tensors="pt", padding=True)
     outputs = model(**inputs)
     image_embeds = outputs.image_embeds

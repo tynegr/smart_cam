@@ -3,5 +3,8 @@ qdrant-client
 pydantic
 fastapi
 uvicorn
-
+Pillow
+transformers
+pandas
+torch
 

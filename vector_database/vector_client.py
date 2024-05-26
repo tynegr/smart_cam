@@ -25,7 +25,7 @@ async def add(data: dict):
 
 
 @app.post("/search")
-async def search(data: dict) -> str:
+async def search(data: dict) -> float:
     embedding = data["embeddings"]
     category = data["label"]
     print(embedding)

@@ -5,6 +5,12 @@ WORKDIR /app
 
 COPY config.py /app/
 
+COPY add_data.py /app/
+
+COPY final_df.csv .
+
+COPY aaa_advml_project /app/aaa_advml_project
+
 COPY vector_database/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
