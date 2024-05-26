@@ -13,7 +13,7 @@ class Item(BaseModel):
 
 class Database:
     def __init__(self) -> None:
-        self.collection_name = "test1"
+        self.collection_name = "test2"
         self.client = qdrant_client.QdrantClient(
             # host=QDRANT_HOST,
             # port=QDRANT_PORT,
@@ -47,21 +47,24 @@ class Database:
         filters = models.Filter(
             must=[
                 models.FieldCondition(
-                    key="document_id",
+                    key="category",
                     match=models.MatchValue(
-                        value=payload["document_id"],
+                        value=payload["category"],
                     ),
                 ),
 
             ],
         )
-        return self.client.search(
+
+        response = self.client.search(
             collection_name=self.collection_name,
             query_vector=embedding,
             query_filter=filters,
-            # limit=N_CHUNKS,
+            limit=5,
         )
 
+        print(sum([response[i].payload["price"] for i in range(5)]) / 5)
+        return sum([response[i].payload["price"] for i in range(5)]) / 5
     def delete_points(self, data: dict):
         document_id = data["document_id"]
         return self.client.delete(
