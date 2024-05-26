@@ -8,12 +8,16 @@ from config import MODEL_PATH, MODEL_HOST, MODEL_PORT, MODEL_NAME
 import torch
 from PIL import Image
 import numpy as np
+import pandas as pd
 
 
 app = FastAPI()
 
 model = CLIPModel.from_pretrained(MODEL_PATH)
 processor = CLIPProcessor.from_pretrained(MODEL_NAME)
+
+df = pd.read_csv('final_df.csv')
+unique_labels = df['category'].dropna().unique().tolist()
 
 @app.post("/predict")
 async def predict(file: UploadFile):
@@ -34,7 +38,9 @@ async def predict(file: UploadFile):
 @app.post("/embed")
 async def embed(file: UploadFile):
     image = Image.open(io.BytesIO(await file.read()))
-    labels = ["футболка Gucci", "футболка Prada", "футболка Гуччи", "футболка Фенди"]
+    # labels = unique_labels
+    labels = ["футболка Gucci", "футболка Prada", "футболка Гуччи",
+              "футболка Фенди"]
     inputs = processor(text=labels, images=image, return_tensors="pt", padding=True)
     outputs = model(**inputs)
     image_embeds = outputs.image_embeds

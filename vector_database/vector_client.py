@@ -10,12 +10,14 @@ app = FastAPI()
 @app.post("/add", status_code=200)
 async def add(data: dict):
         embedding = data["embeddings"]
+        price = data["price"]
+        category = data["category"]
         items = [
-            Item(
-                embedding=embedding[0],
-                payload={
-                    "document_id": "sheryaev",
-
+            Item (
+                embedding = embedding[0],
+                payload = {
+                    "category": category,
+                    "price" : price,
                 },
             )
         ]
@@ -25,7 +27,7 @@ async def add(data: dict):
 @app.post("/search")
 async def search(data: dict) -> str:
     embedding = data["embeddings"]
-    category = data["category"]
+    category = data["label"]
     print(embedding)
     item = Item(
         embedding=embedding[0],

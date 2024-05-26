@@ -15,7 +15,7 @@ class Item(BaseModel):
 class Database:
     def __init__(self) -> None:
         self.collection_name = "test1"
-        self.client = qdrant_client.QdrantClient(url="http://172.20.0.4:6333"
+        self.client = qdrant_client.QdrantClient(url="http://172.20.0.2:6333"
             # host=QDRANT_HOST,
             # port=QDRANT_PORT,
         )
