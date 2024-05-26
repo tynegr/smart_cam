@@ -25,5 +25,7 @@ COPY config.py .
 # Set PYTHONPATH to include the /app directory
 ENV PYTHONPATH="/app"
 
+EXPOSE 8006
+
 # Define the command to run the application
 CMD ["python", "model_client.py"]

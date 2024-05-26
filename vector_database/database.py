@@ -2,6 +2,8 @@ from uuid import uuid4
 import qdrant_client
 from pydantic import BaseModel
 from qdrant_client.http import models
+import os
+QDRANT_URL = os.getenv("QDRANT_URL", "http://localhost:6333")
 
 
 
@@ -13,7 +15,7 @@ class Item(BaseModel):
 class Database:
     def __init__(self) -> None:
         self.collection_name = "test1"
-        self.client = qdrant_client.QdrantClient(url="http://localhost:6333"
+        self.client = qdrant_client.QdrantClient(url="http://172.20.0.4:6333"
             # host=QDRANT_HOST,
             # port=QDRANT_PORT,
         )

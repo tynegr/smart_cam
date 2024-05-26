@@ -1,29 +1,42 @@
-version: '3.9'
+version: '3'
 
 services:
-  model_client:
-    build:
-      context: .
-      dockerfile: Dockerfile_model
-    container_name: model_client_container
-    network_mode: host
-    depends_on:
-      - vector_client
-    command: python model_client.py
+  qdrant:
+    image: qdrant/qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - ./qdrant_storage:/qdrant/storage
 
   vector_client:
     build:
       context: .
       dockerfile: vector_database/Dockerfile_vector
-    container_name: vector_client_container
-    network_mode: host
+    depends_on:
+      - qdrant
+    environment:
+      - QDRANT_URL=http://qdrant:6333
 
-  smart_cam:
+  model_client:
+    build:
+      context: .
+      dockerfile: Dockerfile_model
+    depends_on:
+      - vector_client
+    ports:
+      - "8006:8006"
+
+  main_client:
     build:
       context: .
       dockerfile: smart_cam/Dockerfile_main
-    container_name: main_client_container
     ports:
       - "3000:3000"
       - "8000:8000"
-
+    depends_on:
+      - model_client
+      - vector_client
+    environment:
+      - VECTOR_URL=http://vector_client:8007
+      - MODEL_URL=http://model_client:8006

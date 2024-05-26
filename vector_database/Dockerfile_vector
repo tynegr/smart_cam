@@ -13,4 +13,6 @@ COPY vector_database /app/vector_database
 
 ENV PYTHONPATH="/app"
 
+EXPOSE 8007
+
 CMD ["python", "vector_database/vector_client.py"]
