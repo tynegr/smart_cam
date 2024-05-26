@@ -7,6 +7,8 @@
  # Проект № 15 - умная камера 
 
  # Инструкция по запуску:
+- скачиваем данные по ссылке: https://drive.google.com/file/d/1s8dy0yGBCr3vdM-xBfmHHzqrdxQJHP7x/view?usp=sharing 
+- распоковываем их и кладем в root директорию проекта
 - make network 
 - make run_qdrant
 - make build_model_client
