@@ -1,8 +1,8 @@
 from PIL import Image
 from transformers import CLIPProcessor, CLIPModel
 import io
-from config import MODEL_PATH, MODEL_HOST, MODEL_PORT, MODEL_NAME
-from vector_database.database import Database, Item
+from config import MODEL_PATH, MODEL_NAME
+from vector_database.database import Database
 import pandas as pd
 import os
 import requests
@@ -12,7 +12,7 @@ processor = CLIPProcessor.from_pretrained(MODEL_NAME)
 database = Database()
 
 
-df = pd.read_csv('final_df.csv')
+df = pd.read_csv('avito_df_final.csv')
 
 unique_labels = df['category'].dropna().unique().tolist()
 
