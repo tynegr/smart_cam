@@ -7,6 +7,7 @@ from config import QDRANT_HOST, QDRANT_PORT
 database = Database()
 app = FastAPI()
 
+
 @app.post("/add", status_code=200)
 async def add(data: dict):
         embedding = data["embeddings"]
@@ -14,10 +15,10 @@ async def add(data: dict):
         category = data["category"]
         items = [
             Item (
-                embedding = embedding[0],
-                payload = {
+                embedding=embedding[0],
+                payload={
                     "category": category,
-                    "price" : price,
+                    "price": price,
                 },
             )
         ]
