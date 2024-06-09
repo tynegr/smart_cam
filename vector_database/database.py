@@ -15,9 +15,8 @@ class Item(BaseModel):
 class Database:
     def __init__(self) -> None:
         self.collection_name = "test1"
-        self.client = qdrant_client.QdrantClient(url="http://172.20.0.2:6333"
-            # host=QDRANT_HOST,
-            # port=QDRANT_PORT,
+        self.client = qdrant_client.QdrantClient(
+            url="http://172.20.0.2:6333"
         )
         if not self.client.collection_exists(collection_name=self.collection_name):
             self.client.create_collection(
@@ -61,10 +60,10 @@ class Database:
             collection_name=self.collection_name,
             query_vector=embedding,
             query_filter=filters,
-            # limit=N_CHUNKS,
+            limit=5,
         )
-        print(response[0].payload["price"])
-        return response[0].payload["price"]
+
+        return sum([response[i].payload["price"] for i in range(5)]) / 5
 
 
     def delete_points(self, data: dict):
