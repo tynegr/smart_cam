@@ -16,8 +16,13 @@ app = FastAPI()
 model = CLIPModel.from_pretrained(MODEL_PATH)
 processor = CLIPProcessor.from_pretrained(MODEL_NAME)
 
-df = pd.read_csv('final_df.csv')
-unique_labels = df['category'].dropna().unique().tolist()
+df = pd.read_csv('avito_df_final.csv')
+df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+train_size = int(0.8 * len(df))
+train_df = df[:train_size]
+test_df = df[train_size:]
+unique_labels = train_df['category'].dropna().unique().tolist()
+
 
 @app.post("/predict")
 async def predict(file: UploadFile):
@@ -38,8 +43,7 @@ async def predict(file: UploadFile):
 @app.post("/embed")
 async def embed(file: UploadFile):
     image = Image.open(io.BytesIO(await file.read()))
-    # labels = unique_labels
-    labels = ["Анораки"]
+    labels = unique_labels
     inputs = processor(text=labels, images=image, return_tensors="pt", padding=True)
     outputs = model(**inputs)
     image_embeds = outputs.image_embeds
@@ -52,7 +56,6 @@ async def embed(file: UploadFile):
 
 @app.post("/embed_video")
 async def embed_video(file: UploadFile):
-    # Read the uploaded file
     contents = await file.read()
     video_stream = iio.imiter(contents, plugin="pyav")
 
