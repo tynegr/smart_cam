@@ -1,5 +1,4 @@
 import reflex as rx
-import os
 import requests
 import json
 
@@ -28,12 +27,8 @@ class State(rx.State):
                 json_data = json.loads(response.text)
                 embedding = json_data["embeddings"]
                 category = json_data["label"]
-                response = requests.post(f"http://172.20.0.4:8007/search",json={"embeddings": embedding,"label": category})
+                response = requests.post(f"http://172.20.0.4:8007/search", json={"embeddings": embedding, "label": category})
                 self.price = response.text
             else:
                 self.price = "Unsupported File format"
-
-
-
-
 
