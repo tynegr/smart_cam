@@ -2,7 +2,6 @@ import reflex as rx
 import requests
 import json
 
-
 class State(rx.State):
     price: str = ''
 
@@ -11,16 +10,16 @@ class State(rx.State):
             upload_data = await file.read()
             self.price = ""
             yield
-            try:
-                response = requests.post("http://172.20.0.3:8006/embed", files={"file": upload_data})
-            except Exception as e:
-                response = ""
 
-            if not response:
+            if file.filename.endswith('.mp4'):
+                response = requests.post("http://172.20.0.3:8006/embed_video",
+                                         files={"file": upload_data})
+            else:
+
                 try:
-                    response = requests.post("http://172.20.0.3:8006/embed_video", files={"file": upload_data})
+                    response = requests.post("http://172.20.0.3:8006/embed", files={"file": upload_data})
                 except Exception as e:
-                    pass
+                    response = ""
 
             if response:
                 print(response.text)
