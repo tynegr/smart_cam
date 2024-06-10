@@ -69,7 +69,7 @@ async def embed_video(file: UploadFile):
     video_embeddings = []
     for frame in resized_frames:
         image = Image.fromarray(frame)
-        labels = ["футболка Gucci", "пляж"]
+        labels = unique_labels
         inputs = processor(text=labels, images=image, return_tensors="pt",
                            padding=True)
         outputs = model(**inputs)
