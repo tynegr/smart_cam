@@ -22,7 +22,8 @@ def index() -> rx.Component:
                     ),
                 ),
             ),
-        rx.text(State.price),
+        rx.cond(State.price,
+        rx.text(f"Cправедливая цена: {State.price}")),
         align='center',
         margin_top="15em"
     )
