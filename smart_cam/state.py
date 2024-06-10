@@ -12,12 +12,12 @@ class State(rx.State):
             yield
 
             if file.filename.endswith('.mp4'):
-                response = requests.post("http://172.20.0.3:8006/embed_video",
+                response = requests.post("http://model_client_container:8006/embed_video",
                                          files={"file": upload_data})
             else:
 
                 try:
-                    response = requests.post("http://172.20.0.3:8006/embed", files={"file": upload_data})
+                    response = requests.post("http://model_client_container:8006/embed", files={"file": upload_data})
                 except Exception as e:
                     response = ""
 
@@ -26,7 +26,7 @@ class State(rx.State):
                 json_data = json.loads(response.text)
                 embedding = json_data["embeddings"]
                 category = json_data["label"]
-                response = requests.post(f"http://172.20.0.4:8007/search", json={"embeddings": embedding, "label": category})
+                response = requests.post(f"http://vector_client_container:8007/search", json={"embeddings": embedding, "label": category})
                 self.price = response.text
             else:
                 self.price = "Unsupported File format"
