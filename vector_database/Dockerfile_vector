@@ -7,7 +7,7 @@ COPY config.py /app/
 
 COPY add_data.py /app/
 
-COPY final_df.csv .
+COPY avito_df_final.csv .
 
 COPY aaa_advml_project /app/aaa_advml_project
 
