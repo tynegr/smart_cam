@@ -9,6 +9,7 @@
  # Инструкция по запуску:
 - скачиваем данные по ссылке: https://drive.google.com/file/d/1s8dy0yGBCr3vdM-xBfmHHzqrdxQJHP7x/view?usp=sharing 
 - распоковываем их и кладем в root директорию проекта
+- переходим  в папку "vector database" проекта и в консоли пишем: git clone https://huggingface.co/openai/clip-vit-base-patch16
 - make network 
 - make run_qdrant
 - make build_model_client
