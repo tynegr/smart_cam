@@ -15,7 +15,7 @@ def index() -> rx.Component:
             padding="5em",
         ),
             rx.button(
-                "Загрузить",
+                "Получить цену!",
                 on_click=State.handle_upload(
                     rx.upload_files(
                         upload_id="upload3",
