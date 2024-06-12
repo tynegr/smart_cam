@@ -16,8 +16,8 @@ class Database:
     def __init__(self) -> None:
         self.collection_name = "test1"
         self.client = qdrant_client.QdrantClient(
-                host="qdrant_container", port=6333
-                )
+            # url="http://172.20.0.2:6333"
+        )
         if not self.client.collection_exists(collection_name=self.collection_name):
             self.client.create_collection(
                 collection_name=self.collection_name,
@@ -62,8 +62,16 @@ class Database:
             query_filter=filters,
             limit=5,
         )
+        if len(response) == 0:
+            response = self.client.search(
+                collection_name=self.collection_name,
+                query_vector=embedding,
+                limit=5,
+            )
 
         return sum([response[i].payload["price"] for i in range(len(response))]) / len(response)
+
+
 
     def delete_points(self, data: dict):
         document_id = data["document_id"]
