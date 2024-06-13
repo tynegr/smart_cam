@@ -5,6 +5,7 @@
 - Михаил Щербаков(@Mikhail_oil_car)
 
  # Проект № 15 - умная камера 
+<img width="1194" alt="Снимок экрана 2024-06-13 в 09 56 25" src="https://github.com/tynegr/smart_cam/assets/122130536/0748946a-cf41-4ce9-a788-3c3e9b35a9bc">
 
  # Инструкция по запуску:
 - скачиваем данные по ссылке: https://drive.google.com/file/d/1s8dy0yGBCr3vdM-xBfmHHzqrdxQJHP7x/view?usp=sharing 
