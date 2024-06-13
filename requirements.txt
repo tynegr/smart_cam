@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+imageio[v3]
+opencv-python
+transformers
+torch
+Pillow
+numpy
+pandas
+requests

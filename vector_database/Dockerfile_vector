@@ -1,0 +1,24 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+
+COPY config.py /app/
+
+COPY add_data.py /app/
+
+COPY avito_df_final.csv .
+
+COPY aaa_advml_project /app/aaa_advml_project
+
+COPY vector_database/requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY vector_database /app/vector_database
+
+ENV PYTHONPATH="/app"
+
+EXPOSE 8007
+
+CMD ["python", "vector_database/vector_client.py"]
